@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Set up split tunneling
+CISCO_SPLIT_INC=9
+CISCO_SPLIT_DNS={{ vpn_dns }}
+
+{% for item in vpn_splits %}
+CISCO_SPLIT_INC_{{ item.index }}_ADDR={{ item.addr }}
+CISCO_SPLIT_INC_{{ item.index }}_MASK={{ item.mask }}
+CISCO_SPLIT_INC_{{ item.index }}_MASKLEN={{ item.masklen }}
+CISCO_SPLIT_INC_{{ item.index }}_PROTOCOL=0
+CISCO_SPLIT_INC_{{ item.index }}_SPORT=0
+CISCO_SPLIT_INC_{{ item.index }}_DPORT=0
+{% endfor %}
+
+# Call regular vpnc-script
+. /usr/share/vpnc-scripts/vpnc-script

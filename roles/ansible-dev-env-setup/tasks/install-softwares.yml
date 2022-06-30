@@ -1,0 +1,48 @@
+---
+- name: Update APT Cache
+  apt:
+    update_cache: yes
+
+- name: Install softwares
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - ssh
+    - vim
+    - zip
+    - unzip
+    - unrar
+    - gnome-tweak-tool
+    - gnome-tweaks
+    - make
+    - zsh
+    - vino
+    - tldr
+    - ripgrep
+    - jq
+    - net-tools
+    - remmina
+    - apt-transport-https
+    - ca-certificates
+    - gnupg
+    - meld
+    - vpnc
+
+- name: Install snaps
+  community.general.snap:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - robo3t-snap
+    - dbeaver-ce
+    - postman
+    - slack
+
+- name: Install snaps classic
+  community.general.snap:
+    name: "{{ item }}"
+    state: present
+    classic: yes
+  loop:
+    - gitkraken

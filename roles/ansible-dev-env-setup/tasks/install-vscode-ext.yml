@@ -1,0 +1,35 @@
+---
+- name: Install vscode extensions
+  shell: code --install-extension {{ item }}
+  become: yes
+  become_user: "{{ host.username }}"
+  loop:
+    - vscjava.vscode-java-pack
+    - pivotal.vscode-boot-dev-pack
+    - richardwillis.vscode-gradle-extension-pack
+    - donjayamanne.python-extension-pack
+    - ms-toolsai.jupyter
+    - golang.go
+    - 766b.go-outliner
+    - redhat.ansible
+    - hashicorp.terraform
+    - erd0s.terraform-autocomplete
+    - ms-azuretools.vscode-docker
+    - ms-kubernetes-tools.vscode-kubernetes-tools
+    - ms-vscode-remote.remote-containers
+    - redhat.vscode-yaml
+    - zhuangtongfa.material-theme
+    - monokai.theme-monokai-pro-vscode
+    - equinusocio.vsc-material-theme-icons
+    - vscode-icons-team.vscode-icons
+    - github.copilot
+    - rangav.vscode-thunder-client
+    - alefragnani.bookmarks
+    - formulahendry.code-runner
+    - editorconfig.editorconfig
+    - eamodio.gitlens
+    - eriklynd.json-tools
+    - yzhang.markdown-all-in-one
+    - alefragnani.numbered-bookmarks
+    - adammaras.overtype
+    - esbenp.prettier-vscode

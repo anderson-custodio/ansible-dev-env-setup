@@ -1,0 +1,21 @@
+---
+# defaults file for ansible-dev-env-setup
+pip_repository:
+  index_url: https://pypi.org/simple
+  extra_index: https://{{ pip_username }}:{{ pip_password  }}@{{ pip_host }}/pypi
+  extra_index_url: https://{{ pip_username }}:{{ pip_password  }}@{{ pip_host }}/{{ pip_extra_index_url }}
+  trusted_host: "{{ pip_host }}"
+
+host:
+  username: "{{ host_username }}"
+  password: "{{ host_password }}"
+
+vpn:
+  host: "{{ vpn_host }}"
+  username: "{{ vpn_username }}"
+  password: "{{ vpn_password }}"
+  secret: "{{ vpn_secret }}"
+
+ubuntu_version: focal
+kubectl_version: 1.23.0
+golang_version: 1.17.5

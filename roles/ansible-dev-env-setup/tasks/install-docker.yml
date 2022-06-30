@@ -1,0 +1,25 @@
+---
+- name: Check if docker exists
+  stat:
+    path: /usr/bin/docker
+  register: docker_already_exists
+
+- name: Download docker installer
+  become: yes
+  shell: curl -s https://get.docker.com | bash /dev/stdin
+  when: not docker_already_exists.stat.exists
+
+- name: Group add docker
+  become: yes
+  shell: "groupadd docker -f"
+  when: not docker_already_exists.stat.exists
+
+- name: Usermod docker
+  become: yes
+  shell: "usermod -aG docker {{ host.username }}"
+  when: not docker_already_exists.stat.exists
+
+# - name: Post install docker
+#   become: no
+#   shell: newgrp docker
+#   when: not docker_already_exists.stat.exists

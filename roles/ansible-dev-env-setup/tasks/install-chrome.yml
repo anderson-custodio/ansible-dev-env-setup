@@ -1,0 +1,10 @@
+---
+- name: Check google-chrome exists
+  stat:
+    path: /usr/bin/google-chrome
+  register: chrome_already_exists
+
+- name: Install google chrome
+  apt:
+    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  when: not chrome_already_exists.stat.exists

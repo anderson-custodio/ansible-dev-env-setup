@@ -1,0 +1,16 @@
+---
+- name: Check golang {{ golang_version }} executable exists
+  stat:
+    path: /usr/local/go
+  register: golang_exists
+
+- name: Download and unzip golang {{ golang_version }}
+  unarchive: 
+    src: https://golang.org/dl/go{{ golang_version }}.linux-amd64.tar.gz
+    dest: /usr/local
+    mode: 'a+x'
+    owner: root
+    group: root
+    remote_src: yes
+  when: not golang_exists.stat.exists
+

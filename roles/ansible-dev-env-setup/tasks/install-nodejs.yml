@@ -1,0 +1,60 @@
+---
+- name: check nvm exists
+  stat:
+    path: /home/{{ host.username }}/.nvm/
+  register: nvm_already_exists
+
+- name: Download NVM installer
+  become: no
+  get_url:
+    url: https://raw.githubusercontent.com/creationix/nvm/master/install.sh
+    dest: /tmp/install-nvm.sh
+    mode: '0777'
+  when: not nvm_already_exists.stat.exists
+
+- name: Run NVM installer
+  become: no
+  shell: "bash /tmp/install-nvm.sh"
+  args:
+    executable: /bin/bash
+  when: not nvm_already_exists.stat.exists
+
+- name: Edit .zshrc
+  become: no
+  lineinfile:
+    dest: /home/{{ host.username }}/.zshrc
+    line: "{{ item.line }}"
+  loop:
+    - { line: 'export NVM_DIR="$HOME/.nvm"' }
+    - { line: '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' }
+    - { line: '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' }
+  when: not nvm_already_exists.stat.exists
+
+- name: Edit .bashrc
+  become: no
+  lineinfile:
+    dest: /home/{{ host.username }}/.bashrc
+    line: "{{ item.line }}"
+  loop:
+    - { line: 'export NVM_DIR="$HOME/.nvm"' }
+    - { line: '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' }
+    - { line: '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' }
+  when: not nvm_already_exists.stat.exists
+
+- name: Edit .profile
+  become: no
+  lineinfile:
+    dest: /home/{{ host.username }}/.profile
+    line: "{{ item.line }}"
+  loop:
+    - { line: 'export NVM_DIR="$HOME/.nvm"' }
+    - { line: '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm' }
+    - { line: '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion' }
+  when: not nvm_already_exists.stat.exists
+
+- name: Install NodeJS
+  become: no
+  shell: "source /home/{{ host.username }}/.zshrc && nvm install node"
+  args:
+     executable: /usr/bin/zsh
+  when: not nvm_already_exists.stat.exists

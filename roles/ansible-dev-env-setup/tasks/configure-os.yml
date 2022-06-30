@@ -1,0 +1,15 @@
+---
+- name: Configure sudo
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    line: "%sudo ALL=(ALL)        NOPASSWD: ALL"
+
+- name: Configure repository
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list
+    regexp: "^# deb http://archive.canonical.com/ubuntu {{ ubuntu_version }} partner"
+    line: "deb http://archive.canonical.com/ubuntu {{ ubuntu_version }} partner"
+
+- name: Upgrade OS
+  apt:
+    upgrade: no

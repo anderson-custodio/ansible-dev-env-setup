@@ -1,0 +1,12 @@
+---
+- name: Check kubectl exists
+  stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_already_exists
+
+- name: Download kubectl
+  get_url:
+    url: https://dl.k8s.io/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: 'a+x'
+  when: not kubectl_already_exists.stat.exists

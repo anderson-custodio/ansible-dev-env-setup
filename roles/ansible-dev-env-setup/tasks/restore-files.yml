@@ -1,0 +1,56 @@
+---
+- name: Create folder ~/.config
+  ansible.builtin.file:
+    path: /home/{{ host.username }}/.config
+    state: directory
+    owner: "{{ host.username }}"
+    group: "{{ host.username }}"
+    mode: "0700"
+
+- name: Create pip config file
+  ansible.builtin.template:
+    src: pip.conf.j2
+    dest: "/home/{{ host.username }}/.config/pip.conf"
+    owner: "{{ host.username }}"
+    group: "{{ host.username }}"
+    mode: "0644"
+
+- name: Create folder ~/.pip
+  ansible.builtin.file:
+    path: /home/{{ host.username }}/.pip
+    state: directory
+    owner: "{{ host.username }}"
+    group: "{{ host.username }}"
+    mode: "0700"
+
+- name: Create pip config file on pip folder
+  ansible.builtin.template:
+    src: pip.conf.j2
+    dest: "/home/{{ host.username }}/.pip/pip.conf"
+    owner: "{{ host.username }}"
+    group: "{{ host.username }}"
+    mode: "0644"
+
+- name: Create folder /etc/vpnc
+  ansible.builtin.file:
+    path: /etc/vpnc
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: Create vpn config
+  ansible.builtin.template:
+    src: vpn.conf.j2
+    dest: "/etc/vpnc/vpn.conf"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Copy vpn custom script split
+  ansible.builtin.template:
+    src: custom-script-split.j2
+    dest: /etc/vpnc/custom-script-split
+    owner: root
+    group: root
+    mode: "0777"

@@ -1,0 +1,7 @@
+IPSec gateway {{ vpn.host }}
+IPSec ID XAUTH-VPN
+IPSec secret {{ vpn.secret }}
+Xauth username {{ vpn.username }}
+Xauth password {{ vpn.password }}
+
+Script /etc/vpnc/custom-script-split

@@ -1,0 +1,31 @@
+---
+- name: Check if conda exists
+  stat:
+    path: /home/{{ host.username }}/miniconda/bin/conda
+  register: conda_already_exists
+
+- name: Download conda installer
+  become: no
+  shell: wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /home/{{ host.username }}/miniconda.sh
+  when: not conda_already_exists.stat.exists
+
+- name: Run conda installer
+  become: no
+  shell: "bash /home/{{ host.username }}/miniconda.sh -b -p /home/{{ host.username }}/miniconda"
+  when: not conda_already_exists.stat.exists
+
+- name: Activate conda in zsh shell
+  become: no
+  shell: eval "$(/home/{{ host.username }}/miniconda/bin/conda shell.zsh hook)"
+
+- name: Reload zshrc
+  become: no
+  shell: "source /home/{{ host.username }}/.zshrc"
+  args:
+     executable: /usr/bin/zsh
+
+- name: Conda init
+  become: no
+  shell: "/home/{{ host.username }}/miniconda/bin/conda init --all"
+  args:
+     executable: /usr/bin/zsh

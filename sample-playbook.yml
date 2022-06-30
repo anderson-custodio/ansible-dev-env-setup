@@ -1,0 +1,34 @@
+---
+- name: Run ansible-dev-env-setup
+  hosts: all
+  become: true
+  roles:
+    - role: ansible-dev-env-setup
+  vars:
+    host_username: sample
+    host_password: sample
+    pip_host: sample.com
+    pip_username: sample
+    pip_password: sample
+    pip_extra_index_url: "repository/sample/simple"
+    vpn_username: sample
+    vpn_password: sample
+    vpn_secret: "sample"
+    vpn_host: "0.0.0.0"
+    vpn_dns: "sample.com"
+    env_vars:
+      - name: FOO_VAR
+        value: "sample"
+      - name: BAR_VAR
+        value: "sample"
+    vpn_splits:
+      - name: "sample a"
+        index: 0
+        addr: "1.0.0.0"
+        mask: "255.0.0.0"
+        masklen: "8"
+      - name: "sample b"
+        index: 1
+        addr: "2.0.0.0"
+        mask: "255.0.0.0"
+        masklen: "8"
