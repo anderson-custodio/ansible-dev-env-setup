@@ -15,4 +15,4 @@ Provision the machine and run the ansible playbook with the command `vagrant up`
 To access the VM, type `vagrant ssh`.  
 To destroy the machine run `vagrant destroy`.
 
-Or you can run on an inventory using `ansible-playbook -i hosts.yml create-env-playbook.yml --tags ansible-dev-env-setup`.
+Or you can run on an inventory using `ansible-playbook -i hosts create-env-playbook.yml --tags ansible-dev-env-setup` or `ansible-playbook -i hosts create-env-playbook.yml -u username`.
